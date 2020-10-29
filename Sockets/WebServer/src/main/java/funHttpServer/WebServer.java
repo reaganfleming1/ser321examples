@@ -1,3 +1,6 @@
+//comment
+//comment
+
 /*
 Simple Web Server in Java which allows you to call 
 localhost:9000/ and show you the root.html webpage from the www/root.html folder
