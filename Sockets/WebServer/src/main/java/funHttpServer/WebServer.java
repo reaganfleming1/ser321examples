@@ -1,5 +1,6 @@
-//comment
-//comment
+//comment to test commit
+
+// github didn't want to login for some reason
 
 /*
 Simple Web Server in Java which allows you to call 
@@ -20,6 +21,7 @@ write a response back
 package funHttpServer;
 
 import java.io.*;
+
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +30,9 @@ import java.util.Random;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.nio.charset.Charset;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 class WebServer {
   public static void main(String args[]) {
@@ -201,6 +206,7 @@ class WebServer {
           // wrong data is given this just crashes
 
           Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+         try {
           // extract path parameters
           query_pairs = splitQuery(request.replace("multiply?", ""));
 
@@ -219,7 +225,12 @@ class WebServer {
 
           // TODO: Include error handling here with a correct error code and
           // a response that makes sense
-
+         } catch(Exception e) {
+        	 builder.append("HTTP/1.1 422 Unprocessable Entity\n");
+             builder.append("Content-Type: text/html; charset=utf-8\n");
+             builder.append("\n");
+             builder.append("Valid inputs next time...");
+         }
         } else if (request.contains("github?")) {
           // pulls the query from the request and runs it with GitHub's REST API
           // check out https://docs.github.com/rest/reference/
@@ -241,7 +252,14 @@ class WebServer {
           // amehlhase, 46384989 -> memoranda
           // amehlhase, 46384989 -> ser316examples
           // amehlhase, 46384989 -> test316
-
+          builder.append("HTTP/1.1 200 OK\n");
+          builder.append("Content-Type: text/html; charset=utf-8\n");
+          builder.append("\n");
+          
+          JSONArray array = (JSONArray)JSONValue.parse(json);
+          for(Object obj : array) {
+        	  // I was unable to complete this part :/
+          }
         } else {
           // if the request is not recognized at all
 
